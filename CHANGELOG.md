@@ -1,5 +1,9 @@
 # Changelog
 
+### 4.5.2 (Nov 3, 2022)
+
+- Fix: apply sizeScale to bounds + example
+
 ### 4.5.1 (Nov 3, 2022)
 
 - Fix: move transform scale to its own prop (sizeScale)
