@@ -1,5 +1,9 @@
 # Changelog
 
+### 4.5.1 (Nov 3, 2022)
+
+- Fix: move transform scale to its own prop (sizeScale)
+
 ### 4.5.0 (Nov 3, 2022)
 
 - Fix: add scale to transform to also scale in size.
