@@ -3,7 +3,7 @@
 
 # Make it parallel
 MAKEFLAGS += j4
-export BIN := $(shell yarn bin)
+export BIN := $(shell npm bin)
 .PHONY: test dev lint build build-cjs build-esm build-web clean install link publish
 .DEFAULT_GOAL := build
 
@@ -26,7 +26,7 @@ build-web: $(BIN)
 
 # Allows usage of `make install`, `make link`
 install link:
-	@yarn $@
+	@npm $@
 
 test: $(BIN)
 	@$(BIN)/karma start
@@ -65,4 +65,4 @@ release-major: test
 
 publish: build
 	git push --tags origin HEAD:master
-	yarn publish
+	npm publish

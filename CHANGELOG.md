@@ -1,5 +1,9 @@
 # Changelog
 
+### 4.4.6 (Nov 3, 2022)
+
+- Fix: add scale to transform to also scale in size.
+
 ### 4.4.5 (Apr 26, 2022)
 
 - Fix: `grid` prop unused in `handleDragStop` #621
