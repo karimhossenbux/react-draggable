@@ -1,6 +1,6 @@
 # Changelog
 
-### 4.4.6 (Nov 3, 2022)
+### 4.5.0 (Nov 3, 2022)
 
 - Fix: add scale to transform to also scale in size.
 
@@ -53,23 +53,24 @@
         </Draggable>
       );
     }
-    ````
+    ```
     This can be used for arbitrarily nested components, so long as the ref ends up
     pointing to the actual child DOM node and not a custom component.
     Thanks to react-transition-group for the inspiration.
     `nodeRef` is also available on `<DraggableCore>`.
 - Remove "browser" field in "package.json":
+
   - There is nothing special in the browser build that is actually practical
-    for modern use. The "browser" field, as defined in 
+    for modern use. The "browser" field, as defined in
     https://github.com/defunctzombie/package-browser-field-spec#overview,
     indicates that you should use it if you are directly accessing globals,
     using browser-specific features, dom manipulation, etc.
-    
+
     React components like react-draggable are built to do minimal raw
     DOM manipulation, and to always gate this behind conditionals to ensure
     that server-side rendering still works. We don't make any changes
     to any of that for the "browser" build, so it's entirely redundant.
-    
+
     This should also fix the "Super expression must either be null or
     a function" error (#472) that some users have experienced with particular
     bundler configurations.
@@ -77,10 +78,12 @@
     The browser build may still be imported at "build/web/react-draggable.min.js".
     This is to prevent breakage only. The file is no longer minified to prevent
     possible [terser bugs](https://github.com/terser/terser/issues/308).
+
   - The browser build will likely be removed entirely in 5.0.
+
 - Fix: Make `bounds` optional in TypeScript [#473](https://github.com/strml/react-draggable/pull/473)
 
-### 4.3.1 (Apr 11, 2020) 
+### 4.3.1 (Apr 11, 2020)
 
 > This is a bugfix release.
 
@@ -88,10 +91,12 @@
 - Fixed a serious bug that caused `<DraggableCore>` not to pass styles.
   - `React.cloneElement` has an odd quirk. When you do:
     ```js
-    return React.cloneElement(this.props.children, {style: this.props.children.props.style});
+    return React.cloneElement(this.props.children, {
+      style: this.props.children.props.style,
+    });
     ```
     , `style` ends up undefined.
-- Fixed a bug that caused debug output to show up in the build. 
+- Fixed a bug that caused debug output to show up in the build.
   - `babel-loader` cache does not invalidate when it should. I had modified webpack.config.js in the last version but it reused stale cache.
 
 ### 4.3.0 (Apr 10, 2020)
@@ -100,10 +105,10 @@
 - Fix a long-standing issue where text inputs would unfocus upon dismounting a `<Draggable>`.
   - Thanks @schnerd, [#450](https://github.com/mzabriskie/react-draggable/pull/450)
 - Fix an issue where the insides of a `<Draggable>` were not scrollable on touch devices due to the outer container having `touch-action: none`.
-    - This was a long-standing hack for mobile devices. Without it, the page will scroll while you drag the element.
-    - The new solution will simply cancel the touch event `e.preventDefault()`. However, due to changes in Chrome >= 56, this is only possible on 
-      non-passive event handlers. To fix this, we now add/remove the touchEvent on lifecycle events rather than using React's event system.
-    - [#465](https://github.com/mzabriskie/react-draggable/pull/465)
+  - This was a long-standing hack for mobile devices. Without it, the page will scroll while you drag the element.
+  - The new solution will simply cancel the touch event `e.preventDefault()`. However, due to changes in Chrome >= 56, this is only possible on
+    non-passive event handlers. To fix this, we now add/remove the touchEvent on lifecycle events rather than using React's event system.
+  - [#465](https://github.com/mzabriskie/react-draggable/pull/465)
 - Upgrade devDeps and fix security warnings. None of them actually applied to this module.
 
 ### 4.2.0 (Dec 2, 2019)
@@ -114,18 +119,19 @@
 ### 4.1.0 (Oct 25, 2019)
 
 - Add `"module"` to `package.json`. There are now three builds:
-  * **`"main"`**: ES5-compatible CJS build, suitable for most use cases with maximum compatibility.
+
+  - **`"main"`**: ES5-compatible CJS build, suitable for most use cases with maximum compatibility.
     - For legacy reasons, this has exports of the following shape, which ensures no surprises in CJS or ESM polyfilled environments:
       ```js
       module.exports = Draggable;
       module.exports.default = Draggable;
       module.exports.DraggableCore = DraggableCore;
       ```
-  * **`"web"`**: Minified UMD bundle exporting to `window.ReactDraggable` with the same ES compatibility as the "main" build.
-  * **`"module"`**: ES6-compatible build using import/export.
+  - **`"web"`**: Minified UMD bundle exporting to `window.ReactDraggable` with the same ES compatibility as the "main" build.
+  - **`"module"`**: ES6-compatible build using import/export.
 
   This should fix issues like https://github.com/STRML/react-resizable/issues/113 while allowing modern bundlers to consume esm modules in the future.
-  
+
   No compatibility changes are expected.
 
 ### 4.0.3 (Sep 10, 2019)
@@ -145,7 +151,7 @@
 
 > This is a major release due to a React compatibility change. If you are already on React >= 16.3, this upgrade is non-breaking.
 
-- *Requires React 16.3+ due to use of `getDerivedStateFromProps`.
+- \*Requires React 16.3+ due to use of `getDerivedStateFromProps`.
   - See https://reactjs.org/blog/2018/03/27/update-on-async-rendering.html for why this was done.
 - Upgraded build environment to Babel 7.
 - Switched build from rollup to webpack@4 to simplify.
@@ -184,10 +190,10 @@
 
 - Feature: Added `scale` prop ([#352](https://github.com/mzabriskie/react-draggable/pull/352))
   - Thanks, @wootencl
-- Bugfix: Remove process.browser which is missing in browser ([#329]((https://github.com/mzabriskie/react-draggable/pull/329))
+- Bugfix: Remove process.browser which is missing in browser ([#329](<(https://github.com/mzabriskie/react-draggable/pull/329)>)
 - Bugfix: Fix selection api on IE ([#292](https://github.com/mzabriskie/react-draggable/pull/292))
-- Bugfix: Fixes some issues in the type definitions for TypeScript ([#331]((https://github.com/mzabriskie/react-draggable/pull/331))
-- Bugfix: Fix compare where portal elements are different instance to main window ([#359]((https://github.com/mzabriskie/react-draggable/pull/359))
+- Bugfix: Fixes some issues in the type definitions for TypeScript ([#331](<(https://github.com/mzabriskie/react-draggable/pull/331)>)
+- Bugfix: Fix compare where portal elements are different instance to main window ([#359](<(https://github.com/mzabriskie/react-draggable/pull/359)>)
 
 ### 3.0.5 (Jan 11, 2018)
 
@@ -326,9 +332,12 @@ type DraggableEventHandler = (e: Event, data: DraggableData) => void | false;
 type DraggableData = {
   node: HTMLElement,
   // lastX + deltaX === x
-  x: number, y: number,
-  deltaX: number, deltaY: number,
-  lastX: number, lastY: number
+  x: number,
+  y: number,
+  deltaX: number,
+  deltaY: number,
+  lastX: number,
+  lastY: number,
 };
 ```
 
